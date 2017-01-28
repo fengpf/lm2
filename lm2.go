@@ -193,7 +193,7 @@ func (rc *recordCache) push(rec *record) {
 		return
 	}
 
-	if len(rc.cache) == rc.size && rand.Float32() >= 0.01 {
+	if len(rc.cache) == rc.size && rand.Float32() >= 0.0001 {
 		rc.lock.RUnlock()
 		return
 	}
@@ -302,8 +302,6 @@ func (c *Collection) readRecord(offset int64) (*record, error) {
 	}
 	c.stats.incRecordsRead(1)
 	c.stats.incCacheMisses(1)
-
-	c.cache.push(rec)
 
 	return rec, nil
 }
